@@ -25,7 +25,7 @@ $(DOCDIR)/.git:
 
 gh-pages: $(DOCDIR)/.git web
 	git -C $(DOCDIR) pull
-	cp -r www/* $(DOCDIR)/affe/
+	cp -r web/* $(DOCDIR)/
 	git -C $(DOCDIR) add --all 
 	git -C $(DOCDIR) commit -a -m "gh-page updates"
 	git -C $(DOCDIR) push origin gh-pages
