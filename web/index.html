@@ -1,0 +1,63 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doodlinator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css" integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
+    <link rel="stylesheet" href="fork.min.css">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center">Doodlinator</h1>
+      <label for="no-preference">Hard constraint:
+        <textarea
+          id="no-preference"
+          placeholder="Those are the time you are definitely not available"
+          >
+        </textarea>
+      </label>
+      <label for="maybe-preference">Soft constraint:
+        <textarea
+          id="maybe-preference"
+          placeholder="Those are the time you might not be available"
+          >
+        </textarea>
+      </label>
+
+      <div class="button-group large align-center">
+        <a
+          type="button"
+          class="button warning"
+          id="bookmarklet"
+          href='javascript:(
+function () { 
+  var script = document.createElement("script"); 
+  script.src = "https://doodlinator.github.io/x.js"; 
+  document.body.appendChild(script);
+} ) ();'
+          >
+          Drag me!
+        </a>
+      </div>
+
+    </div>
+    
+    <div class="fork-me-wrapper">
+      <div class="fork-me">
+        <a class="fork-me-link" href="https://github.com/daypack-dev/doodlinator">
+          <span class="fork-me-text">Fork Me On GitHub</span>
+        </a>
+      </div>
+    </div>
+
+    <script
+	    src="https://code.jquery.com/jquery-3.3.1.min.js"
+	    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js" integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+    <script>$(document).foundation();</script>
+  </body>
+</html>

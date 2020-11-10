@@ -1,0 +1,22 @@
+body{
+  width: 60%;
+	margin: 0 auto;
+	color: #45505E;
+	font-family: 'Karla', Arial, sans-serif;
+	background: #FAF7F5;
+}
+.container{
+	margin: 1em 1em 0em 1em;
+	padding: 20px 20px 20px 20px;
+	background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 1.5px 4px rgba(0,0,0,0.24),0 1.5px 6px rgba(0,0,0,0.12);
+}
+
+textarea{
+    height:auto;
+}
+
+.fork-me {
+    background-color: #000;
+}
