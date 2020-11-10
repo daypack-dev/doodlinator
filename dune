@@ -1,0 +1,5 @@
+(executable
+ (name webpage)
+ (libraries js_of_ocaml daypack-lib)
+ (preprocess (pps js_of_ocaml-ppx))
+ (modes js))
