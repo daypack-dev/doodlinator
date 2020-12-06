@@ -52,8 +52,8 @@ let handler_area (area : Dom_html.textAreaElement Js.t) r f =
   let _ = handler () () in
   ()
 
-let no_te = ref @@ Timere.empty
-let maybe_te = ref @@ Timere.empty
+let no_te = ref Timere.empty
+let maybe_te = ref Timere.empty
 
 let launch () =
   let no = Marshal.to_string !no_te [] in
