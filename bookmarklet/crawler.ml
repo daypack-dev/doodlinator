@@ -13,7 +13,7 @@ let query node s =
 type choice = Yes | No | Maybe
   
 type column = {
-  time : Daypack_lib.Time_expr_ast.t ;
+  time : Timere.t ;
   action : choice -> unit ;
 }
 
@@ -28,7 +28,7 @@ let doodle () =
         !"d-month" !"d-date" !"d-timeStart" !"d-timeEnd"
     in 
     let time =
-      Result.get_ok @@ Daypack_lib.Time_expr.of_string time_str
+      Result.get_ok @@ Timere_parse.timere time_str
     in
     let input = query node "input" in
     let action = function

@@ -1,5 +1,4 @@
 open Js_of_ocaml
-open Daypack_lib
 
 (** Error reporting *)
 
@@ -41,7 +40,7 @@ let textarea_maybe =
 
 let handler_area (area : Dom_html.textAreaElement Js.t) r f =
   let handler _ _ =
-    begin match Time_expr.of_string @@ Js.to_string @@ area##.value with
+    begin match Timere_parse.timere @@ Js.to_string @@ area##.value with
       | Ok te -> r := te
       | Error s -> report_error s
     end;
@@ -53,8 +52,8 @@ let handler_area (area : Dom_html.textAreaElement Js.t) r f =
   let _ = handler () () in
   ()
 
-let no_te = ref @@ Time_expr_ast.Time_round_robin_select []
-let maybe_te = ref @@ Time_expr_ast.Time_round_robin_select []
+let no_te = ref @@ Timere.empty
+let maybe_te = ref @@ Timere.empty
 
 let launch () =
   let no = Marshal.to_string !no_te [] in
