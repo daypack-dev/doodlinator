@@ -56,8 +56,8 @@ let no_te = ref Timere.empty
 let maybe_te = ref Timere.empty
 
 let launch () =
-  let no = Marshal.to_string !no_te [] in
-  let maybe = Marshal.to_string !maybe_te [] in
+  let no = Timere.to_sexp_string !no_te in
+  let maybe = Timere.to_sexp_string !maybe_te in
   update_bookmarklet ~no ~maybe
 
 (** Main *)

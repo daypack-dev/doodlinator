@@ -2,11 +2,11 @@ open Js_of_ocaml
 
 let noPref : Timere.t =
   let v = Js.Unsafe.global##.noPref in
-  Marshal.from_string v 0
+  Result.get_ok @@ Timere.of_sexp_string v
 
 let maybePref : Timere.t =
   let v = Js.Unsafe.global##.maybePref in
-  Marshal.from_string v 0
+  Result.get_ok @@ Timere.of_sexp_string v
 
 let () =
   let l = Crawler.doodle () in
