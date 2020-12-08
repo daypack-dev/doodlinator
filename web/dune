@@ -1,5 +1,5 @@
 (executable
  (name webpage)
- (libraries js_of_ocaml daypack-lib)
+ (libraries js_of_ocaml timere timere-parse)
  (preprocess (pps js_of_ocaml-ppx))
  (modes js))
