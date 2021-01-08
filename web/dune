@@ -1,6 +1,6 @@
 (executable
  (name webpage)
- (libraries js_of_ocaml timere timere.tz.none timere-parse)
+ (libraries js_of_ocaml timere timere.tzdb.none timere-parse)
  (preprocess (pps js_of_ocaml-ppx))
  (js_of_ocaml (flags --source-map --debug-info))
  (modes js))
