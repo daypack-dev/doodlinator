@@ -1,5 +1,7 @@
 (executable
+ (flags     (-w "+a-4-9-29-37-40-42-44-48-50-32-30@8"))
  (name doodlinator)
- (libraries js_of_ocaml timere timere-parse)
+ (libraries js_of_ocaml timere timere.tz.none timere-parse)
  (preprocess (pps js_of_ocaml-ppx))
+ (js_of_ocaml (flags --source-map --debug-info))
  (modes js))

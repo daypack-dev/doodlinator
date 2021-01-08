@@ -4,7 +4,9 @@ open Js_of_ocaml
 
 (* Crappy error reporting, to improve *)
 let report_error s =
-  Printf.eprintf "%s%!" s
+  let () = Js.Unsafe.global##.console##log (Js.string s) in
+  ()
+  (* Printf.eprintf "%s%!" s *)
 
 
 (** Bookmarklet handling *)
@@ -18,13 +20,15 @@ let bookmarklet_link =
 let update_bookmarklet ~no ~maybe =
   let s =  Js.string @@ Format.asprintf {|javascript:(
 function () {
-var noPref = %S;
-var maybePref = %S;
-var script = document.createElement("script"); 
-script.src = "%s/x.js"; 
+var script = document.createElement("script");
+script.id = "timere";
+script.src = "%s/x.js";
+script.noPref = %S;
+script.maybePref = %S;
 document.body.appendChild(script);
 } ) ();|}
-      no maybe current_url
+      current_url
+      no maybe
   in
   bookmarklet_link##.href := s
 

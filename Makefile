@@ -13,7 +13,7 @@ clean:
 	rm -f web/x.js web/script.js
 
 web: all
-	dune build --profile release bookmarklet/doodlinator.bc.js web/webpage.bc.js
+	dune build bookmarklet/doodlinator.bc.js web/webpage.bc.js
 	@cp -f _build/default/bookmarklet/doodlinator.bc.js web/x.js
 	@cp -f _build/default/web/webpage.bc.js web/script.js
 
