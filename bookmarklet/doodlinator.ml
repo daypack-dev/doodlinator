@@ -11,8 +11,10 @@ let maybe_pref : Timere.t =
   Result.get_ok @@ Timere.of_sexp_string v
 
 let () =
-  let l = Crawler.doodle () in
-  List.iter (fun {Crawler. time ; action } ->
-      Time_resolv.choice ~no_pref ~maybe_pref time |> action
-    ) l;
-  ()
+  Lwt.async (fun () ->
+      let%lwt l = Crawler.doodle () in
+      List.iter (fun {Crawler. time ; action } ->
+          Time_resolv.choice ~no_pref ~maybe_pref time |> action
+        ) l;
+      Lwt.return_unit
+    )

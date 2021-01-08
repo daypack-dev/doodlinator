@@ -21,19 +21,29 @@ type column = {
   action : choice -> unit ;
 }
 
-let timere_of_date_group (date_group : Dom_html.element Js.t) : Timere.t =
-  let (!) s =
-    String.lowercase_ascii @@ Js.to_string (query date_group s)##.innerHTML
-  in
-  let () = Js.Unsafe.global##.console##log (Js.string (!".d-month")) in
-  let () = Js.Unsafe.global##.console##log (Js.string (!".d-date")) in
-  let _ =
-    (date_group##querySelector (Js.string ".d-startTime"))
-  in
-  (* let () = Js.Unsafe.global##.console##log (Js.string (!".d-timeEnd")) in *)
-  Timere.empty
-
 let doodle () =
+  let tz_field =
+    Option.get @@
+    (Dom_html.getElementById_coerce "d-timeZoneField" Dom_html.CoerceTo.input)
+  in
+  let tz_string =
+    Js.to_string tz_field##.value
+  in
+  let () =
+    Js.Unsafe.global##.console##log (Js.string tz_string)
+  in
+  let%lwt tz_json_req =
+    (Js_of_ocaml_lwt.XmlHttpRequest.get
+      (Printf.sprintf
+         "https://raw.githubusercontent.com/daypack-dev/timere/main/tzdb-json/%s.json" tz_string
+      )
+    )
+  in
+  let tz_json_string = tz_json_req.content in
+  let tz = Result.get_ok @@ Timere.Time_zone.of_json_string tz_json_string in
+  let () =
+    Js.Unsafe.global##.console##log (Js.string tz_json_string)
+  in
   let columns = query_all Dom_html.document "li.d-option" in
   let on_column (col : Dom_html.element Js.t) =
     let time_start = query_inner_html col ".d-timeStart" in
@@ -64,7 +74,11 @@ let doodle () =
         in
         Timere.(
           after (Duration.make ~days:366() ) search_start
-          (between_exc (Duration.make ~days:366 ()) start end_exc))
+            (
+              with_tz tz
+                (between_exc (Duration.make ~days:366 ()) start end_exc)
+            )
+        )
       | [x; y] ->
         let month_start = query_inner_html x ".d-month" in
         let day_start = query_inner_html x ".d-date" in
@@ -86,7 +100,11 @@ let doodle () =
         in
         Timere.(
           after (Duration.make ~days:366() ) search_start
-          (between_exc (Duration.make ~days:366 ()) start end_exc))
+            (
+              with_tz tz
+              (between_exc (Duration.make ~days:366 ()) start end_exc)
+            )
+        )
       | _ ->
         failwith "Unexpected case"
     in
@@ -98,4 +116,4 @@ let doodle () =
     in
     { time ; action }
   in
-  List.map on_column columns
+  Lwt.return (List.map on_column columns)
