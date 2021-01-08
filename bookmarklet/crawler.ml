@@ -64,7 +64,7 @@ let doodle () =
         in
         Timere.(
           after (Duration.make ~days:366() ) search_start
-          (between_exc (Duration.make ~days:1 ()) start end_exc))
+          (between_exc (Duration.make ~days:366 ()) start end_exc))
       | [x; y] ->
         let month_start = query_inner_html x ".d-month" in
         let day_start = query_inner_html x ".d-date" in
@@ -86,7 +86,7 @@ let doodle () =
         in
         Timere.(
           after (Duration.make ~days:366() ) search_start
-          (between_exc (Duration.make ~days:1 ()) start end_exc))
+          (between_exc (Duration.make ~days:366 ()) start end_exc))
       | _ ->
         failwith "Unexpected case"
     in
