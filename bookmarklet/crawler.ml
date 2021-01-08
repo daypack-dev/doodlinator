@@ -39,6 +39,10 @@ let doodle () =
     let time_start = query_inner_html col ".d-timeStart" in
     let time_end_exc = query_inner_html col ".d-timeEnd" in
     let date_groups = query_all col ".d-dateGroup" in
+    let cur = Timere.cur_timestamp () in
+    let search_start =
+      Timere.(of_timestamp cur)
+    in
     let time =
       match date_groups with
       | [x] ->
@@ -58,7 +62,9 @@ let doodle () =
                month day time_end_exc
             )
         in
-        Timere.(between_exc (Duration.make ~days:366 ()) start end_exc)
+        Timere.(
+          after (Duration.make ~days:366() ) search_start
+          (between_exc (Duration.make ~days:1 ()) start end_exc))
       | [x; y] ->
         let month_start = query_inner_html x ".d-month" in
         let day_start = query_inner_html x ".d-date" in
@@ -78,12 +84,13 @@ let doodle () =
                month_end day_end time_end_exc
             )
         in
-        Timere.(between_exc (Duration.make ~days:366 ()) start end_exc)
+        Timere.(
+          after (Duration.make ~days:366() ) search_start
+          (between_exc (Duration.make ~days:1 ()) start end_exc))
       | _ ->
         failwith "Unexpected case"
     in
     let input = query col "input" in
-    let () = Js.Unsafe.global##.console##log (Js.string (Timere.to_sexp_string time)) in
     let action = function
       | Yes -> input##click
       | No -> ()
